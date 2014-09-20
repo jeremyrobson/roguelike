@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<script src="map.js"></script>
+<script src="game.js"></script>
+<script>
+var canvas, context, interval;
+var game;
+
+function load() {
+    canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d");
+    canvas.onmousedown = canvas_mousedown;
+    
+    game = create_game();
+    
+    interval = window.setInterval(loop, 1000/60);
+}
+
+function canvas_mousemove() {
+
+}
+
+function canvas_mousedown(e) {
+    var mousex = Math.floor(e.offsetX / 10);
+    var mousey = Math.floor(e.offsetY / 10);
+    game.mousedown(mousex, mousey);
+}
+
+function loop() {
+    game.loop();
+    draw();
+}
+
+function draw() {
+    game.draw(context);
+}
+
+window.onload = function() {
+    load();
+};
+
+</script>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+</body>
+</html>
