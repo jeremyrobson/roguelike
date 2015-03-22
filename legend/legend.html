@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<script>
+var randint = function(min, max) { return Math.floor(Math.random() * (max - min)) + min; };
+
+var wrap = function(n, max) {
+    if (n < 0) return n + max;
+    if (n >= max) return n - max;
+    return n;
+};
+
+var clone = function(obj) {
+    var newobj;
+    if (obj instanceof Array) {
+        newobj = [];
+        for (var i=0;i<obj.length;i++)
+            newobj[i] = clone(obj[i]);
+    }
+    else if (obj instanceof Object) {
+        newobj = {};
+        for (var key in obj)
+            newobj[key] = clone(obj[key]);
+    }
+    else
+        newobj = obj;
+    return newobj;
+};
+
+var select_random = function(arr) { return arr[randint(0, arr.length)]; };
+</script>
+<script src="maptemplates.js"></script>
+<script src="game.js"></script>
+<script src="map.js"></script>
+<script>
+var canvas, context, interval, game;
+
+window.onload = function() {
+    canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d");
+    
+    game = new Game(canvas);
+    
+    interval = window.setInterval(game.loop.bind(game), 1000/30);
+};
+</script>
+</head>
+<body>
+<table>
+    <tr valign="top">
+        <td>
+            <canvas id="canvas" width="512" height="512"></canvas>
+        </td>
+        <td>
+            <span id="maptree"></span>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
